@@ -10,7 +10,8 @@
 #import <objc/runtime.h>
 #import "TCWKWebView.h"
 
-
+#import "UIWebView+TCWKWebView.h"
+#import "WKWebView+TCWKWebView.h"
 
 @interface _TCWKWebViewExtra: NSObject
 {
@@ -32,8 +33,16 @@
 @end
 
 
-
 @implementation UIView (TCWKWebView)
+
++ (NSString *)tc_systemUserAgent
+{
+    if (Nil != WKWebView.class) {
+        return WKWebView.tc_systemUserAgent;
+    }
+    
+    return UIWebView.tc_systemUserAgent;
+}
 
 - (NSURLRequest *)originalRequest
 {

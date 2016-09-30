@@ -19,9 +19,11 @@
 @property (nonatomic, strong) UIView *webHeaderView;
 @property (nonatomic, assign) BOOL reloadOriRequestEnterForeground;
 
++ (NSString *)tc_systemUserAgent;
+
 - (void)loadRequest:(NSURLRequest *)request;
 - (BOOL)canGoBack;
-- (void)goBack;
+- (id)tc_goBack;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id result, NSError *error))completionHandler;
 

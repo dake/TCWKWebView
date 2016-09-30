@@ -13,4 +13,6 @@
 @property (nonatomic, strong) NSURLRequest *originalRequest;
 @property (nonatomic, assign) BOOL reloadOriRequestEnterForeground;
 
++ (NSString *)tc_systemUserAgent;
+
 @end

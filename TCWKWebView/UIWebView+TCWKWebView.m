@@ -17,6 +17,24 @@
     [self tc_swizzle:@selector(loadRequest:)];
 }
 
++ (NSString *)tc_systemUserAgent
+{
+    static NSString *s_userAgent = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dispatch_block_t block = ^{
+            s_userAgent = [[[self alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        };
+        if (NSThread.isMainThread) {
+            block();
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), block);
+        }
+    });
+    
+    return s_userAgent;
+}
+
 - (void)clearCookies
 {
     for (NSHTTPCookie *cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
@@ -41,6 +59,12 @@
 {
     self.originalRequest = request;
     [self tc_loadRequest:request];
+}
+
+- (id)tc_goBack
+{
+    [self goBack];
+    return @YES;
 }
 
 
